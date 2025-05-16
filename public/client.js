@@ -50,6 +50,9 @@ function calculate(operand1, operand2, operation) {
             };
             http.send(null);
             return;
+        case '%':
+            uri += "?operation=modulo";
+            break;
         default:
             setError();
             return;

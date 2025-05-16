@@ -21,6 +21,7 @@ exports.calculate = function(req, res) {
       if (a < 0) return null;
       return Math.sqrt(a); 
     },
+    'modulo':   function(a, b) { return a % b }, // <-- Add this line
   };
 
   if (!req.query.operation) {

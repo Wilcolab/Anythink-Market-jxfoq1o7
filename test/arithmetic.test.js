@@ -224,4 +224,23 @@ describe('Arithmetic', function () {
                 });
         });
     });
+
+    describe('Modulo', function () {
+        it('should return 0 for 10 % 5', function(done) {
+            request.get('/arithmetic?operation=modulo&operand1=10&operand2=5')
+                .expect(200)
+                .end(function(err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('should return 1 for 10 % 3', function(done) {
+            request.get('/arithmetic?operation=modulo&operand1=10&operand2=3')
+                .expect(200)
+                .end(function(err, res) {
+                    expect(res.body).to.eql({ result: 1 });
+                    done();
+                });
+        });
+    });
 });

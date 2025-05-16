@@ -93,7 +93,152 @@ describe('Arithmetic', function () {
         });
     });
 
-// TODO: Challenge #1
+describe('Power', function () {
+    it('raises a positive integer to a positive integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=3')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 8 });
+                done();
+            });
+    });
+    it('raises a positive integer to the power of zero', function (done) {
+        request.get('/arithmetic?operation=power&operand1=5&operand2=0')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 1 });
+                done();
+            });
+    });
+    it('raises zero to a positive integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=0&operand2=5')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 0 });
+                done();
+            });
+    });
+    it('raises a negative integer to an even power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=4')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 16 });
+                done();
+            });
+    });
+    it('raises a negative integer to an odd power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=3')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: -8 });
+                done();
+            });
+    });
+    it('raises a positive number to a negative power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=-2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 0.25 });
+                done();
+            });
+    });
+    it('raises zero to the power of zero (should return 1)', function (done) {
+        request.get('/arithmetic?operation=power&operand1=0&operand2=0')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 1 });
+                done();
+            });
+    });
+    it('raises a negative base to a fractional exponent (should return null)', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=0.5')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: null });
+                done();
+            });
+    });
+    it('raises a positive float to a positive integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2.5&operand2=2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 6.25 });
+                done();
+            });
+    });
+    it('raises a negative float to an odd integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-1.5&operand2=3')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: -3.375 });
+                done();
+            });
+    });
+    it('raises a negative float to an even integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-1.5&operand2=2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 2.25 });
+                done();
+            });
+    });
+    it('raises a positive number to a fractional exponent', function (done) {
+        request.get('/arithmetic?operation=power&operand1=9&operand2=0.5')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 3 });
+                done();
+            });
+    });
+    it('raises a negative integer to a negative integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=-3')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: -0.125 });
+                done();
+            });
+    });
+    it('raises a positive integer to a large power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=10')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 1024 });
+                done();
+            });
+    });
+    it('raises a number using exponential notation', function (done) {
+        request.get('/arithmetic?operation=power&operand1=1e2&operand2=2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 10000 });
+                done();
+            });
+    });
+    it('returns null for 0 raised to a negative power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=0&operand2=-1')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: null });
+                done();
+            });
+    });
+    it('returns null for NaN operand1', function (done) {
+        request.get('/arithmetic?operation=power&operand1=foo&operand2=2')
+            .expect(400)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ error: "Invalid operand1: foo" });
+                done();
+            });
+    });
+    it('returns null for NaN operand2', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=bar')
+            .expect(400)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ error: "Invalid operand2: bar" });
+                done();
+            });
+    });
+});
  
 
     describe('Multiplication', function () {

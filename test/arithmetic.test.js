@@ -205,4 +205,42 @@ describe('Arithmetic', function () {
                 });
         });
     });
+
+    describe('Square Root', function () {
+        it('computes the square root of a positive number', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=9')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 3 });
+                    done();
+                });
+        });
+        it('returns null for negative input', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=-4')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: null });
+                    done();
+                });
+        });
+    });
+
+    describe('Modulo', function () {
+        it('should return 0 for 10 % 5', function(done) {
+            request.get('/arithmetic?operation=modulo&operand1=10&operand2=5')
+                .expect(200)
+                .end(function(err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('should return 1 for 10 % 3', function(done) {
+            request.get('/arithmetic?operation=modulo&operand1=10&operand2=3')
+                .expect(200)
+                .end(function(err, res) {
+                    expect(res.body).to.eql({ result: 1 });
+                    done();
+                });
+        });
+    });
 });

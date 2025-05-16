@@ -10,12 +10,18 @@ exports.calculate = function(req, res) {
     res.json({ error: err.message });
   });
 
-  // TODO: Add operator
   var operations = {
     'add':      function(a, b) { return Number(a) + Number(b) },
     'subtract': function(a, b) { return a - b },
     'multiply': function(a, b) { return a * b },
     'divide':   function(a, b) { return a / b },
+    'power':    function(a, b) { return Math.pow(a, b) },
+    'sqrt':     function(a, _b) { 
+      a = Number(a);
+      if (a < 0) return null;
+      return Math.sqrt(a); 
+    },
+    'modulo':   function(a, b) { return a % b }, // <-- Add this line
   };
 
   if (!req.query.operation) {
@@ -26,6 +32,16 @@ exports.calculate = function(req, res) {
 
   if (!operation) {
     throw new Error("Invalid operation: " + req.query.operation);
+  }
+
+  if (req.query.operation === 'sqrt') {
+    // Only operand1 is needed for sqrt
+    if (!req.query.operand1 ||
+        !req.query.operand1.match(/^(-)?[0-9\.]+(e(-)?[0-9]+)?$/) ||
+        req.query.operand1.replace(/[-0-9e]/g, '').length > 1) {
+      throw new Error("Invalid operand1: " + req.query.operand1);
+    }
+    return res.json({ result: operations['sqrt'](req.query.operand1) });
   }
 
   if (!req.query.operand1 ||

@@ -33,6 +33,23 @@ function calculate(operand1, operand2, operation) {
         case '/':
             uri += "?operation=divide";
             break;
+        case 'sqrt':
+            uri += "?operation=sqrt";
+            uri += "&operand1=" + encodeURIComponent(operand1);
+            setLoading(true);
+            var http = new XMLHttpRequest();
+            http.open("GET", uri, true);
+            http.onload = function () {
+                setLoading(false);
+                if (http.status == 200) {
+                    var response = JSON.parse(http.responseText);
+                    setValue(response.result);
+                } else {
+                    setError();
+                }
+            };
+            http.send(null);
+            return;
         default:
             setError();
             return;

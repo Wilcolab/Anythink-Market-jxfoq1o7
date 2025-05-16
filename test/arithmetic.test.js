@@ -205,4 +205,23 @@ describe('Arithmetic', function () {
                 });
         });
     });
+
+    describe('Square Root', function () {
+        it('computes the square root of a positive number', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=9')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 3 });
+                    done();
+                });
+        });
+        it('returns null for negative input', function (done) {
+            request.get('/arithmetic?operation=sqrt&operand1=-4')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: null });
+                    done();
+                });
+        });
+    });
 });

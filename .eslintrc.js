@@ -6,6 +6,7 @@ module.exports = {
         "request": true
     },
     "extends": "eslint:recommended",
+    
     "overrides": [
     ],
     "parserOptions": {

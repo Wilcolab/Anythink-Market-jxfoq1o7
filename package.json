@@ -28,7 +28,7 @@
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.5.0",
     "eslint": "^8.29.0",
     "gulp": "^4.0.0",
     "gulp-inline-source": "^4.0.0",
